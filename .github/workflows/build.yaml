@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: all-builds-${{ steps.data.outputs.name_suffix }}.zip
-          path: build/libs
+          path: "**/build/libs/*.jar"
           retention-days: 30
           if-no-files-found: error
       - name: Upload Fabric build
@@ -66,8 +66,8 @@ jobs:
         with:
           name: freecam-fabric-${{ steps.data.outputs.name_suffix }}.jar
           path: |
-            build/libs/*-fabric-*.jar
-            !**-modrinth-*.jar
+            fabric/build/libs/*-fabric-*.jar
+            !**/*-modrinth-*.jar
           retention-days: 90
           if-no-files-found: error
       - name: Upload Forge build
@@ -75,7 +75,7 @@ jobs:
         with:
           name: freecam-${{ steps.data.outputs.forge_name }}-${{ steps.data.outputs.name_suffix }}.jar
           path: |
-            build/libs/*-${{ steps.data.outputs.forge_name }}-*.jar
-            !**-modrinth-*.jar
+            forge/build/libs/*-${{ steps.data.outputs.forge_name }}-*.jar
+            !**/*-modrinth-*.jar
           retention-days: 90
           if-no-files-found: error

@@ -13,6 +13,7 @@ import net.xolt.freecam.config.gui.ValidateRegex;
 import net.xolt.freecam.config.gui.BoundedContinuous;
 import net.xolt.freecam.config.gui.ModBindingsConfig;
 import net.xolt.freecam.config.gui.VariantTooltip;
+import net.xolt.freecam.platform.Minecheck;
 import net.xolt.freecam.variant.api.BuildVariant;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +31,9 @@ public class ModConfig implements ConfigData {
         AutoConfigExtensions.apply(ModConfig.class);
         holder.registerSaveListener(CollisionBehavior::onConfigChange);
         holder.registerLoadListener(CollisionBehavior::onConfigChange);
+        // Settings the fork owns while Minecheck is installed (F4/F8)
+        holder.registerSaveListener(PresenceOverrides::onConfigChange);
+        holder.registerLoadListener(PresenceOverrides::onConfigChange);
         INSTANCE = holder.getConfig();
         CollisionBehavior.onConfigChange(holder, INSTANCE); // Listener isn't called on initial load...
     }
@@ -125,7 +129,8 @@ public class ModConfig implements ConfigData {
 
         @VariantTooltip(variant = "normal", count = 2)
         @VariantTooltip(variant = "modrinth", count = 3)
-        public boolean allowInteract = false;
+        // F4: interaction is the inverse of Minecheck's presence
+        public boolean allowInteract = !Minecheck.isPresent();
 
         @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
@@ -151,9 +156,6 @@ public class ModConfig implements ConfigData {
     public static class NotificationConfig {
         @ConfigEntry.Gui.Tooltip
         public boolean notifyFreecam = true;
-
-        @ConfigEntry.Gui.Tooltip
-        public boolean notifyTripod = true;
     }
 
     public enum FlightMode implements SelectionListEntry.Translatable {

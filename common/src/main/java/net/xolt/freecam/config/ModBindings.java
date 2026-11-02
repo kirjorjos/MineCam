@@ -19,14 +19,10 @@ public enum ModBindings {
 
     KEY_TOGGLE(() -> builder("toggle")
             .action(Freecam::toggle)
-            .holdAction(Freecam::activateTripodHandler)
             .defaultKey(GLFW_KEY_F4)
             .build()),
     KEY_PLAYER_CONTROL(() -> builder("playerControl")
             .action(Freecam::switchControls)
-            .build()),
-    KEY_TRIPOD_RESET(() -> builder("tripodReset")
-            .holdAction(Freecam::resetTripodHandler)
             .build()),
     KEY_CONFIG_GUI(() -> builder("configGui")
             .action(() -> MC.setScreen(AutoConfig.getConfigScreen(ModConfig.class, MC.screen).get()))

@@ -32,6 +32,9 @@
     "fabric": "*",
     "minecraft": "${fabric_mc_req}"
   },
+  "recommends": {
+    "minecheck": "*"
+  },
   "custom": {
     "modmenu": {
       "links": {

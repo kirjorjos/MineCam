@@ -28,3 +28,12 @@ mandatory = true
 versionRange = "${forge_mc_req}"
 ordering = "NONE"
 side = "CLIENT"
+
+# Optional in both directions: the fork is usable standalone (F10), and Minecheck installs it only
+# to own the human's camera. Neither mod may require the other.
+[[dependencies.${mod_id}]]
+modId = "minecheck"
+mandatory = false
+versionRange = "[0,)"
+ordering = "NONE"
+side = "CLIENT"

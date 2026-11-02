@@ -11,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static net.xolt.freecam.config.ModBindings.KEY_TOGGLE;
-import static net.xolt.freecam.config.ModBindings.KEY_TRIPOD_RESET;
 import static net.xolt.freecam.config.ModConfig.InteractionMode.PLAYER;
 
 @Mixin(Minecraft.class)
@@ -42,18 +40,10 @@ public class MinecraftMixin {
         }
     }
 
-    // Prevents hotbar keys from changing selected slot when freecam key is held
-    @Inject(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;consumeClick()Z", ordinal = 2), cancellable = true)
-    private void onHandleInputEvents(CallbackInfo ci) {
-        if (KEY_TOGGLE.get().isDown() || KEY_TRIPOD_RESET.get().isDown()) {
-            ci.cancel();
-        }
-    }
-
-    // Disables freecam if the player disconnects.
+    // Tears down the camera entity when a level is unloaded, but keeps freecam active (F5).
     @Inject(method = "clearLevel()V", at = @At(value = "HEAD"))
-    private void onDisconnect(CallbackInfo ci) {
-        Freecam.onDisconnect();
+    private void onLevelUnload(CallbackInfo ci) {
+        Freecam.onLevelUnload();
     }
 
     @Unique
