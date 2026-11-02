@@ -4,8 +4,12 @@ MineCam is the Freecam fork the Minecheck harness uses for its **human-only** ob
 The requirements it is built against live in `.notes/freecam-spec.md`, with the harness side in
 Minecheck's `two-view-capture-plan.md`.
 
-- Base: [MinecraftFreecam/Freecam](https://github.com/MinecraftFreecam/Freecam) (MIT), branch `minecheck`
-  cut from `origin/1.18` — Minecraft 1.18.2, `mod_version=1.3.5`.
+- Base: [MinecraftFreecam/Freecam](https://github.com/MinecraftFreecam/Freecam) (MIT), cut from its
+  `1.18` branch — Minecraft 1.18.2, `mod_version=1.3.5`.
+- Lives at [kirjorjos/MineCam](https://github.com/kirjorjos/MineCam), branch `1.18.2/development`: the
+  `<version>/development` grammar the shared CI keys on. `upstream` is Freecam, `origin` is MineCam.
+- Registered in `kirjorjos/ci` as a `minecraft-mods` consumer with the `issues` type only — the fork
+  has no screenshot corpus, lifecycle suites or script tree for the other three to judge.
 - The mod id, packages and language keys stay `freecam`. Renaming them would touch every mixin
   config, metadata template and translation for no behavioural gain, and would make upstream merges
   expensive. MineCam is the fork's name, `freecam` is its technical id.
@@ -86,4 +90,5 @@ Minecheck deliberately does not mark. Listed as open seams in the spec's §12.
 ./gradlew :fabric:runClient
 ```
 
-1.18.2 only on this branch, Java 17.
+1.18.2 only on this branch, Java 17. `./gradlew build` writes the loadable jars to
+`fabric/build/libs` and `forge/build/libs`; `.github/workflows/build.yaml` uploads from there.
