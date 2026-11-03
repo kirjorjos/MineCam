@@ -1,8 +1,10 @@
+# MineCam-specific. The shared CI templates (kirjorjos/ci) do not own this file, so editing it here
+# is safe; every other file under .github is overwritten on the next sync.
+#
+# Both upstream links are gone: `crowdin.com/project/freecam` is Freecam's translation project, which
+# cannot carry MineCam's strings, and upstream's discussions belong to a different repository.
 blank_issues_enabled: false
 contact_links:
-    - name: Translations
-      url: https://crowdin.com/project/freecam
-      about: You can help improve Freecam's translations using Crowdin.
-    - name: Questions and discussion
-      url: https://github.com/MinecraftFreecam/Freecam/discussions/new/choose
-      about: If the options above don't seem right, you may be better off starting a "discussion" instead.
+  - name: Questions and discussion
+    url: https://github.com/kirjorjos/MineCam/discussions/new/choose
+    about: Setup, usage, or "is this supposed to happen" questions - start a discussion rather than an issue.
