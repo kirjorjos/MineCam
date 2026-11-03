@@ -4,8 +4,9 @@ MineCam is the Freecam fork the Minecheck harness uses for its **human-only** ob
 The requirements it is built against live in `.notes/freecam-spec.md`, with the harness side in
 Minecheck's `two-view-capture-plan.md`.
 
-- Base: [MinecraftFreecam/Freecam](https://github.com/MinecraftFreecam/Freecam) (MIT), cut from its
-  `1.18` branch — Minecraft 1.18.2, `mod_version=1.3.5`.
+- Base: [MinecraftFreecam/Freecam](https://github.com/MinecraftFreecam/Freecam) (MIT; the notice is
+  kept in `THIRD_PARTY_LICENSES.md`), cut from its `1.18` branch — Minecraft 1.18.2,
+  `mod_version=1.3.5`.
 - Lives at [kirjorjos/MineCam](https://github.com/kirjorjos/MineCam), branch `1.18.2/development`: the
   `<version>/development` grammar the shared CI keys on. `upstream` is Freecam, `origin` is MineCam.
 - Registered in `kirjorjos/ci` as a `minecraft-mods` consumer with the `issues` type only — the fork
@@ -92,3 +93,20 @@ Minecheck deliberately does not mark. Listed as open seams in the spec's §12.
 
 1.18.2 only on this branch, Java 17. `./gradlew build` writes the loadable jars to
 `fabric/build/libs` and `forge/build/libs`; `.github/workflows/build.yaml` uploads from there.
+
+## Licensing
+
+MineCam is **GPLv3** (`LICENSE`) where Freecam is MIT. That is deliberate and it is permitted: MIT
+grants sublicensing, so the combined work can ship under the GPLv3.
+
+The one obligation it does not remove is MIT's — the copyright and permission notice has to travel
+with every copy. It is therefore reproduced verbatim in `THIRD_PARTY_LICENSES.md`, not deleted, and
+that file states which portions it covers. The GPLv3 adds the usual source-availability obligation
+on anyone distributing a binary; this repository is the source.
+
+`gradle.properties` declares `licence=GPL-3.0-only`, so the value the loaders display and
+`fabric.mod.json` / `mods.toml` interpolate matches the licence file.
+
+Upstream's MIT text names no copyright holder — `Copyright (c) 2021` and then nothing. That is left
+as it was: filling in a name would attribute copyright to someone who does not hold it. The fork's
+own changes are copyright kirjorjos.
