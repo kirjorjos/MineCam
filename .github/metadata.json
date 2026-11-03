@@ -1,0 +1,9 @@
+{
+  "loaders": ["fabric", "forge"],
+  "release": {
+    "prefix": "freecam-",
+    "nameFormat": "{loader}-{version}{deobf}.jar",
+    "variants": ["", "-deobf"],
+    "artifactsDir": "build/libs"
+  }
+}

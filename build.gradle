@@ -69,6 +69,29 @@ changelog {
     headerParserRegex = ~/(\d+(?:\.\d+)+(?:-[-a-z]+\d*)?)/
 }
 
+// `-dev-<n>` is local-only and auto-incrementing. CI builds the drop-in jar unclassified, so a
+// release asset name stays stable; a local build takes the next free number across both platforms,
+// which is what lets several builds sit in one launcher profile without overwriting each other.
+// Reading the output directory is what makes the number increment, and it is also why a local remap
+// is never up to date from one build to the next.
+def minecamDevTag() {
+    // Scoped to this build's version: bump major, minor or patch and nothing matches, so the counter
+    // starts again at 1 rather than continuing a number that belonged to the previous release.
+    // Built from the properties rather than `project.version`: this runs before the `allprojects`
+    // block below assigns that, and the string has to be the one archive names actually carry.
+    def version =
+            java.util.regex.Pattern.quote("${project.mod_version}+mc${project.minecraft_version}")
+    def pattern = ~/-${version}-dev-(\d+)\.jar$/
+    def tagOf = { String name ->
+        def m = pattern.matcher(name)
+        m.find() ? (m[0][1] as int) : null
+    }
+    def dir = file("${buildDir}/libs")
+    def tags = dir.isDirectory() ? dir.listFiles().collect { tagOf(it.name) }.findAll { it != null } : []
+    System.getenv("CI")?.trim() ? 0 : (tags ? tags.max() : 0) + 1
+}
+ext.localDevTag = minecamDevTag()
+
 allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"

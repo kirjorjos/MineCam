@@ -41,6 +41,14 @@ dependencies {
     shadowCommon project(":variant:api")
 }
 
+// Loom labels this task's jar `-dev`, which is exactly the suffix that means "droppable here": it
+// is not. The plain `jar` carries this project's own classes in development names with nothing
+// shadowed in, so it is named for what it contains. `-deobf` is the shadowed deobf jar and
+// `-dev-<tag>` the one a launcher gets.
+tasks.named("jar") {
+    archiveClassifier = "names"
+}
+
 variants.each { variant ->
     // Create a variant source set & shadow config
     def set = sourceSets.create(variant) {
@@ -87,6 +95,10 @@ variants.each { variant ->
         appendix = variant
     }
 
+    // Unclassified in CI; `-dev-<n>` in a local build, numbered by the root project across both
+    // platforms. `0` is the CI case.
+    def devTag = rootProject.ext.localDevTag
+
     shadowJarTask.configure {
         group = "shadow"
         from sourceSets.main.output
@@ -103,7 +115,9 @@ variants.each { variant ->
         ]
 
         archiveAppendix = appendix
-        archiveClassifier = "dev-shadow"
+        // The same code in development names: for reading stack traces and writing mixins, never
+        // loaded by a game. The jar a launcher gets is the remapped one below.
+        archiveClassifier = "deobf"
     }
 
     remapJarTask.configure {
@@ -112,6 +126,7 @@ variants.each { variant ->
         dependsOn shadowJarTask
         injectAccessWidener = true
         archiveAppendix = appendix
+        archiveClassifier = devTag ? "dev-${devTag}" : ""
         // Output in root `build/libs`
         destinationDirectory = rootProject.layout.buildDirectory.dir "libs"
     }
