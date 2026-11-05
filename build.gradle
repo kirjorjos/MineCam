@@ -100,8 +100,9 @@ allprojects {
     version = "${project.mod_version}+mc${project.minecraft_version}"
     group = rootProject.maven_group
     base {
-        // Format archive names, e.g. 'freecam-fabric-1.2.3+mc1.20.4.jar'
-        archivesName = rootProject.name + project.path.replaceAll(':', '-')
+        // Format archive names, e.g. 'minecam-fabric-1.2.3+mc1.20.4.jar'. Not `rootProject.name`:
+        // that is the mod id, which has to stay `freecam` for mixin configs and entrypoints.
+        archivesName = (project.findProperty("archive_prefix") ?: "minecam") + project.path.replaceAll(':', '-')
     }
 
     repositories {
