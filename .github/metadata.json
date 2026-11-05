@@ -1,5 +1,9 @@
 {
   "loaders": ["fabric", "forge"],
+  "build": {
+    "jdk": 21,
+    "toolchains": [17]
+  },
   "release": {
     "prefix": "minecam-",
     "nameFormat": "{loader}-{version}{deobf}.jar",
