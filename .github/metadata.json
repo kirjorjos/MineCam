@@ -1,7 +1,7 @@
 {
   "loaders": ["fabric", "forge"],
   "release": {
-    "prefix": "freecam-",
+    "prefix": "minecam-",
     "nameFormat": "{loader}-{version}{deobf}.jar",
     "variants": ["", "-deobf"],
     "artifactsDir": "build/libs"
