@@ -15,4 +15,4 @@ include("forge")
 include("metadata")
 include("variant", "variant:api", "variant:normal", "variant:modrinth")
 
-rootProject.name = "freecam"
+rootProject.name = "minecam"
